@@ -1,0 +1,6 @@
+# Own modules
+./lib_common
+./models
+./bot
+./cryptowatch
+./arbitrage_bot

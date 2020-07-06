@@ -1,0 +1,60 @@
+version: "3"
+
+services:
+  db:
+    container_name: db
+    image: postgres:12
+    env_file:
+      - .env
+    volumes:
+      - postgres:/data/postgres
+    networks:
+      - app-network
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  bot:
+    container_name: bot
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    command: python -m bot.manager
+    env_file:
+      - .env
+    networks:
+      - app-network
+    links:
+      - db
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+
+  arbitrage:
+    container_name: arbitrage
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    command: python -m arbitrage_bot.arbitrage_test
+    env_file:
+      - .env
+    networks:
+      - app-network
+    links:
+      - db
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres:

@@ -1,0 +1,17 @@
+black
+requests
+python-dotenv
+psycopg2-binary
+SQLAlchemy
+numpy
+pandas
+pyyaml
+matplotlib
+PyQt5
+bitfinex-api-py
+bitstring
+pysha3
+pyblake2
+Flask-SQLAlchemy
+Flask-Migrate
+Flask-Script
